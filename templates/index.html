@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}FitPlan — Home{% endblock %}
+{% block content %}
+    <h1>Personalized Workout &amp; Diet Planner</h1>
+    <p>Get a plan built around your goals, activity level, and stats.</p>
+    <a href="{{ url_for('onboarding') }}" class="button">Create a New Plan</a>
+
+    <hr>
+
+    <h2>Already have a plan?</h2>
+    <form action="{{ url_for('onboarding') }}" method="get">
+        <!-- Placeholder for now — a real "look up by ID" or login flow comes later.
+             For now, if you know your user_id, just visit /dashboard/<id> directly. -->
+        <p>Visit <code>/dashboard/&lt;your_user_id&gt;</code> directly for now.</p>
+    </form>
+{% endblock %}

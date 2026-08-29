@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}FitPlan — Dashboard{% endblock %}
+{% block content %}
+    <h1>{{ user.name }}'s Dashboard</h1>
+    <p>Goal: {{ user.goal }} | Activity: {{ user.activity_level }}</p>
+
+    <h2>Your Plan</h2>
+    {% if plan %}
+        <div class="card">
+            <h3>Diet Targets</h3>
+            <p>Calories: {{ plan.calorie_target }} kcal/day</p>
+            <p>Protein: {{ plan.protein_target }}g | Carbs: {{ plan.carb_target }}g | Fat: {{ plan.fat_target }}g</p>
+        </div>
+
+        <div class="card">
+            <h3>Weekly Workout Split</h3>
+            <table>
+                <tr>
+                    <th>Day</th><th>Type</th><th>Sets/Reps</th><th>Rest</th>
+                </tr>
+                {% for day, details in plan.workout_split.items() %}
+                <tr>
+                    <td>{{ day }}</td>
+                    <td>{{ details.type }}</td>
+                    <td>
+                        {% if details.type != 'rest' %}
+                            {{ details.sets }}x{{ details.reps }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if details.type != 'rest' %}
+                            {{ details.rest_seconds }}s
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>No plan found for this user yet.</p>
+    {% endif %}
+
+    <h2>Recent Logs</h2>
+    {% if recent_logs %}
+        <table>
+            <tr>
+                <th>Date</th><th>Weight (kg)</th><th>Calories</th><th>Workout Done</th>
+            </tr>
+            {% for log in recent_logs %}
+            <tr>
+                <td>{{ log.log_date }}</td>
+                <td>{{ log.weight_kg }}</td>
+                <td>{{ log.calories_consumed }}</td>
+                <td>{{ "Yes" if log.workout_completed else "No" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No logs yet. This is expected for a brand-new user — logs get added over time.</p>
+    {% endif %}
+
+    <h2>Weekly Adherence</h2>
+    {% if adherence_data %}
+        <table>
+            <tr>
+                <th>Week</th><th>Days Logged</th><th>Adherence %</th>
+            </tr>
+            {% for row in adherence_data %}
+            <tr>
+                <td>{{ row.week }}</td>
+                <td>{{ row.days_logged }}</td>
+                <td>{{ row.adherence_pct }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Not enough log history yet to calculate adherence. (Placeholder for a real chart — coming in Phase 6.)</p>
+    {% endif %}
+
+    <p><em>Note: charts (Chart.js or similar) come in Phase 6 — this is the raw data wiring only, so we can confirm the pipeline works before styling it.</em></p>
+{% endblock %}

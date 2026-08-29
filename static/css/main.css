@@ -1,0 +1,97 @@
+/* Minimal, functional styling only — real design polish happens in Phase 6.
+   The goal here is just "readable and not painful to look at" while you
+   verify the Flask pipeline works end to end. */
+
+body {
+    font-family: -apple-system, Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+    margin: 0;
+}
+
+.navbar {
+    background: #2c3e50;
+    padding: 1rem 2rem;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1.5rem;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.flash {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+label {
+    margin-top: 0.75rem;
+    font-weight: bold;
+}
+
+input, select, button {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    font-size: 1rem;
+}
+
+button {
+    margin-top: 1.5rem;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.75rem;
+}
+
+button:hover {
+    background: #1a252f;
+}
+
+.button {
+    display: inline-block;
+    background: #2c3e50;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}

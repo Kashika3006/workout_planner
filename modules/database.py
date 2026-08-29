@@ -2,6 +2,7 @@ import os
 import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -15,7 +16,8 @@ def get_connection():
             port=int(os.getenv("DB_PORT", 3306)),
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME", "workout_planner_db")
+            database=os.getenv("DB_NAME", "workout_planner_db"),
+            use_pure=True
         )
         return connection
     except Error as e:
@@ -87,6 +89,62 @@ def get_logs_for_user(user_id, limit=None):
             params.append(limit)
         cursor.execute(query, params)
         return cursor.fetchall()
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def insert_plan(user_id, calorie_target, protein_target, carb_target, fat_target, workout_split):
+    """Saves a generated plan. workout_split is a dict — stored as JSON."""
+    connection = get_connection()
+    try:
+        cursor = connection.cursor()
+        query = """
+            INSERT INTO plans (user_id, calorie_target, protein_target, carb_target, fat_target, workout_split)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (
+            user_id, calorie_target, protein_target, carb_target, fat_target,
+            json.dumps(workout_split)
+        ))
+        connection.commit()
+        return cursor.lastrowid
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def get_latest_plan(user_id):
+    """Returns the most recently created plan for a user, with workout_split
+    parsed back into a dict. Returns None if the user has no plan yet."""
+    connection = get_connection()
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(
+            "SELECT * FROM plans WHERE user_id = %s ORDER BY created_at DESC LIMIT 1",
+            (user_id,)
+        )
+        plan = cursor.fetchone()
+        if plan and plan.get("workout_split"):
+            plan["workout_split"] = json.loads(plan["workout_split"])
+        return plan
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def insert_form_check(user_id, exercise_type, rep_number, peak_angle, verdict, feedback, session_id=None):
+    """Saves the result of one detected rep from the form checker."""
+    connection = get_connection()
+    try:
+        cursor = connection.cursor()
+        query = """
+            INSERT INTO form_checks (user_id, session_id, exercise_type, rep_number, peak_angle, verdict, feedback)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (user_id, session_id, exercise_type, rep_number, peak_angle, verdict, feedback))
+        connection.commit()
+        return cursor.lastrowid
     finally:
         cursor.close()
         connection.close()

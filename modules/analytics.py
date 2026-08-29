@@ -68,3 +68,20 @@ def get_weekly_activity(user_id):
         return pd.read_sql(query, connection, params=(user_id,))
     finally:
         connection.close()
+
+def get_weight_history(user_id):
+    """Returns raw (log_date, weight_kg) pairs, ascending by date, with nulls
+    dropped. This is the plain history Prophet needs as input — not the
+    rolling average, which is a derived/smoothed view for a different purpose."""
+    query = """
+        SELECT log_date, weight_kg
+        FROM daily_logs
+        WHERE user_id = %s AND weight_kg IS NOT NULL
+        ORDER BY log_date ASC
+    """
+    connection = get_connection()
+    try:
+        return pd.read_sql(query, connection, params=(user_id,))
+    finally:
+        connection.close()
+ 
