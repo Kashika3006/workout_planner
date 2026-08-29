@@ -1,6 +1,6 @@
 -- analytics_queries.sql
 -- Reference SQL for the workout planner's analytics layer.
--- Replace <demo_user_id> with the actual user_id before running in Workbench.
+-- Replace 1 with the actual user_id before running in Workbench.
 -- These are wrapped in Python functions in modules/analytics.py — this file
 -- is the readable, standalone reference version for documentation/portfolio.
 
@@ -14,7 +14,7 @@ SELECT
     SUM(workout_completed) AS workouts_completed,
     ROUND(SUM(workout_completed) / COUNT(*) * 100, 1) AS adherence_pct
 FROM daily_logs
-WHERE user_id = <demo_user_id>
+WHERE user_id = 1
 GROUP BY YEARWEEK(log_date)
 ORDER BY week;
 
@@ -32,7 +32,7 @@ SELECT
         ), 2
     ) AS rolling_7day_avg
 FROM daily_logs
-WHERE user_id = <demo_user_id>
+WHERE user_id = 1
 ORDER BY log_date;
 
 
@@ -44,6 +44,6 @@ SELECT
     SUM(steps_walked) AS total_steps,
     ROUND(AVG(calories_consumed), 0) AS avg_calories
 FROM daily_logs
-WHERE user_id = <demo_user_id>
+WHERE user_id = 1
 GROUP BY YEARWEEK(log_date)
 ORDER BY week;
