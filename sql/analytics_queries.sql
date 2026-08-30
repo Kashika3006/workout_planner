@@ -1,7 +1,7 @@
 -- analytics_queries.sql
 -- Reference SQL for the workout planner's analytics layer.
 -- Replace 1 with the actual user_id before running in Workbench.
--- These are wrapped in Python functions in modules/analytics.py — this file
+-- These are wrapped in Python functions in modules/analytics.py - this file
 -- is the readable, standalone reference version for documentation/portfolio.
 
 

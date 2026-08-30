@@ -1,5 +1,5 @@
 """
-Analytics layer — wraps the SQL queries from sql/analytics_queries.sql
+Analytics layer - wraps the SQL queries from sql/analytics_queries.sql
 into Python functions that return pandas DataFrames, ready for further
 analysis (e.g. correlation) or for feeding a dashboard.
 """
@@ -71,7 +71,7 @@ def get_weekly_activity(user_id):
 
 def get_weight_history(user_id):
     """Returns raw (log_date, weight_kg) pairs, ascending by date, with nulls
-    dropped. This is the plain history Prophet needs as input — not the
+    dropped. This is the plain history Prophet needs as input - not the
     rolling average, which is a derived/smoothed view for a different purpose."""
     query = """
         SELECT log_date, weight_kg

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}FitPlan - Form Check{% endblock %}
+{% block content %}
+    <h1>Form Checker</h1>
+    <p><a href="{{ url_for('dashboard', user_id=user.user_id) }}">&larr; Back to dashboard</a></p>
+
+    <div class="card">
+        <h3>Upload a video</h3>
+        <p>Film yourself from the side for best results. Squat is the most tested exercise so far - deadlift and push-up thresholds are still being tuned.</p>
+        <form action="{{ url_for('form_check', user_id=user.user_id) }}" method="post" enctype="multipart/form-data">
+            <label for="exercise_type">Exercise</label>
+            <select id="exercise_type" name="exercise_type" required>
+                <option value="squat">Squat</option>
+                <option value="deadlift">Deadlift</option>
+                <option value="push_up">Push-up</option>
+            </select>
+
+            <label for="video">Video file</label>
+            <input type="file" id="video" name="video" accept="video/*" required>
+
+            <button type="submit">Analyze</button>
+        </form>
+    </div>
+
+    {% if results is not none %}
+        <h2>Results - {{ exercise_type }}</h2>
+        {% if results %}
+            <table>
+                <tr>
+                    <th>Rep</th><th>Peak Angle</th><th>Verdict</th><th>Feedback</th>
+                </tr>
+                {% for rep in results %}
+                <tr>
+                    <td>{{ rep.rep_number }}</td>
+                    <td>{{ rep.peak_angle }}°</td>
+                    <td>{{ rep.verdict }}</td>
+                    <td>{{ rep.feedback }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No reps were detected in that video. This can happen if the exercise thresholds don't match your movement pattern yet, the person wasn't clearly visible, or the video was too short - this is expected tuning work, not necessarily a bug.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

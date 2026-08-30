@@ -95,7 +95,7 @@ def get_logs_for_user(user_id, limit=None):
 
 
 def insert_plan(user_id, calorie_target, protein_target, carb_target, fat_target, workout_split):
-    """Saves a generated plan. workout_split is a dict — stored as JSON."""
+    """Saves a generated plan. workout_split is a dict - stored as JSON."""
     connection = get_connection()
     try:
         cursor = connection.cursor()
@@ -145,6 +145,23 @@ def insert_form_check(user_id, exercise_type, rep_number, peak_angle, verdict, f
         cursor.execute(query, (user_id, session_id, exercise_type, rep_number, peak_angle, verdict, feedback))
         connection.commit()
         return cursor.lastrowid
+    finally:
+        cursor.close()
+        connection.close()
+
+def find_user_by_name(name):
+    """Looks up a user by name (case-insensitive). Returns the MOST RECENTLY
+    created match if multiple users share a name  - this app has no login
+    system, so name lookup is a convenience, not a secure identifier. Returns
+    None if no match found."""
+    connection = get_connection()
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(
+            "SELECT * FROM users WHERE LOWER(name) = LOWER(%s) ORDER BY created_at DESC LIMIT 1",
+            (name,)
+        )
+        return cursor.fetchone()
     finally:
         cursor.close()
         connection.close()

@@ -11,7 +11,7 @@ def prepare_prophet_input(user_id):
     from modules.analytics import get_weight_history
     """Pulls weight history and reshapes it into Prophet's required
     ds/y column format. Raises if there's not enough data to forecast
-    meaningfully — Prophet technically runs on very little data, but
+    meaningfully - Prophet technically runs on very little data, but
     the result is unreliable below ~2 weeks."""
     df = get_weight_history(user_id)
 
@@ -28,7 +28,7 @@ def prepare_prophet_input(user_id):
 
 def fit_and_forecast(user_id, periods_days=28):
     """Fits Prophet on the user's weight history and forecasts forward.
-    Returns (model, forecast_df) — forecast_df includes both the historical
+    Returns (model, forecast_df) - forecast_df includes both the historical
     fitted values AND the future predictions, with yhat_lower/yhat_upper
     as the confidence interval bounds."""
     prophet_df = prepare_prophet_input(user_id)
@@ -65,7 +65,7 @@ def generate_forecast_chart(model, forecast, save_path=None):
 def get_forecast_summary(forecast, target_weight=None):
     """Turns the raw forecast into a human-readable sentence.
     If target_weight is given, estimates roughly when that weight might be
-    reached — a simple nearest-match lookup, not a precise inverse model."""
+    reached - a simple nearest-match lookup, not a precise inverse model."""
     last_row = forecast.iloc[-1]
     predicted_date = last_row["ds"].strftime("%B %d, %Y")
     predicted_weight = round(last_row["yhat"], 1)
@@ -85,7 +85,7 @@ def get_forecast_summary(forecast, target_weight=None):
         eta_date = eta_row["ds"].strftime("%B %d, %Y")
         summary += (
             f" Based on this trend, you may reach {target_weight} kg around "
-            f"{eta_date} — treat this as a rough estimate, not a guarantee."
+            f"{eta_date} - treat this as a rough estimate, not a guarantee."
         )
 
     return summary

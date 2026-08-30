@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% block title %}FitPlan — Dashboard{% endblock %}
+{% block title %}FitPlan - Dashboard{% endblock %}
 {% block content %}
     <h1>{{ user.name }}'s Dashboard</h1>
     <p>Goal: {{ user.goal }} | Activity: {{ user.activity_level }}</p>
+
+    <div class="card">
+        <a href="{{ url_for('forecast', user_id=user.user_id) }}" class="button">View Weight Forecast</a>
+        <a href="{{ url_for('form_check', user_id=user.user_id) }}" class="button">Check My Form</a>
+        <a href="{{ url_for('report', user_id=user.user_id) }}" class="button">Download PDF Report</a>
+    </div>
 
     <h2>Your Plan</h2>
     {% if plan %}
@@ -56,7 +62,7 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>No logs yet. This is expected for a brand-new user — logs get added over time.</p>
+        <p>No logs yet. This is expected for a brand-new user - logs get added over time.</p>
     {% endif %}
 
     <h2>Weekly Adherence</h2>
@@ -74,8 +80,8 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>Not enough log history yet to calculate adherence. (Placeholder for a real chart — coming in Phase 6.)</p>
+        <p>Not enough log history yet to calculate adherence. (Placeholder for a real chart - coming in Phase 6.)</p>
     {% endif %}
 
-    <p><em>Note: charts (Chart.js or similar) come in Phase 6 — this is the raw data wiring only, so we can confirm the pipeline works before styling it.</em></p>
+    <p><em></em></p>
 {% endblock %}

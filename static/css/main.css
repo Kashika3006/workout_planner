@@ -1,24 +1,81 @@
-/* Minimal, functional styling only — real design polish happens in Phase 6.
-   The goal here is just "readable and not painful to look at" while you
-   verify the Flask pipeline works end to end. */
+/* ============================================================
+   Flame Theme - warm ember palette, dark ground, gradient accents
+   Replaces the plain Phase 3 stylesheet. Same class names as before
+   (.navbar, .card, .button, table, form), so no template changes needed.
+   ============================================================ */
+
+:root {
+    --ink: #0a0503;          /* near-black, warm charcoal ground */
+    --panel: #241510;         /* slightly lifted panel background */
+    --ember: #c81d11;         /* deep red */
+    --flame: #ff6b1a;         /* orange */
+    --gold: #ffb627;          /* gold */
+    --ash: #f0e6da;           /* warm off-white text */
+    --ash-dim: #b8a99a;       /* muted secondary text */
+    --border: #3d241a;        /* warm dark border */
+}
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    font-family: -apple-system, Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--ink);
+    color: var(--ash);
     margin: 0;
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    font-family: 'Arial Black', 'Segoe UI', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--flame) 50%, var(--ember) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--gold), var(--ember)) 1;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .navbar {
-    background: #2c3e50;
+    background: linear-gradient(180deg, #2a1710 0%, var(--ink) 100%);
     padding: 1rem 2rem;
+    border-bottom: 2px solid var(--flame);
+    box-shadow: 0 2px 12px rgba(255, 107, 26, 0.15);
+}
+
+.navbar .brand {
+    font-family: 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--gold), var(--flame));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .navbar a {
-    color: white;
+    color: var(--ash);
     text-decoration: none;
     margin-right: 1.5rem;
     font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+    color: var(--flame);
 }
 
 .container {
@@ -28,16 +85,18 @@ body {
 }
 
 .flash {
-    background: #fff3cd;
-    border: 1px solid #ffeeba;
+    background: #3d1f10;
+    border: 1px solid var(--flame);
+    color: var(--gold);
     padding: 0.75rem 1rem;
     border-radius: 4px;
     margin-bottom: 1rem;
 }
 
 .card {
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--flame);
     border-radius: 6px;
     padding: 1rem 1.5rem;
     margin-bottom: 1.5rem;
@@ -52,46 +111,146 @@ form {
 label {
     margin-top: 0.75rem;
     font-weight: bold;
+    color: var(--gold);
 }
 
 input, select, button {
     padding: 0.5rem;
     margin-top: 0.25rem;
     font-size: 1rem;
+    background: var(--panel);
+    color: var(--ash);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--flame);
+    box-shadow: 0 0 0 2px rgba(255, 107, 26, 0.25);
 }
 
 button {
     margin-top: 1.5rem;
-    background: #2c3e50;
-    color: white;
+    background: linear-gradient(90deg, var(--ember), var(--flame));
+    color: var(--ash);
     border: none;
-    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     cursor: pointer;
     padding: 0.75rem;
+    transition: filter 0.2s ease, transform 0.1s ease;
 }
 
 button:hover {
-    background: #1a252f;
+    filter: brightness(1.15);
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .button {
     display: inline-block;
-    background: #2c3e50;
-    color: white;
+    background: linear-gradient(90deg, var(--ember), var(--flame));
+    color: var(--ash);
     padding: 0.6rem 1.2rem;
     text-decoration: none;
     border-radius: 4px;
     margin-top: 1rem;
+    margin-right: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    transition: filter 0.2s ease;
+}
+
+.button:hover {
+    filter: brightness(1.15);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
+    background: var(--panel);
 }
 
-th, td {
+th {
+    text-align: left;
+    padding: 0.6rem 0.5rem;
+    background: #331c12;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid var(--flame);
+}
+
+td {
     text-align: left;
     padding: 0.5rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border);
+    color: var(--ash-dim);
+}
+
+tr:hover td {
+    color: var(--ash);
+    background: rgba(255, 107, 26, 0.05);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+code {
+    background: var(--panel);
+    color: var(--gold);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+}
+
+/* ============================================================
+   Mobile responsiveness (from Phase 6)
+   ============================================================ */
+@media (max-width: 600px) {
+    .navbar {
+        padding: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .container {
+        margin: 1rem auto;
+        padding: 0 0.75rem;
+    }
+
+    .card {
+        padding: 0.75rem 1rem;
+    }
+
+    form {
+        max-width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .button {
+        display: block;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }

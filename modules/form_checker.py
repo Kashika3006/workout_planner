@@ -1,10 +1,10 @@
 """
-Form checker — processes an uploaded video, runs MediaPipe pose estimation
+Form checker - processes an uploaded video, runs MediaPipe pose estimation
 per frame, calculates the relevant joint angle for the given exercise, and
 counts reps via a simple state machine (angle crosses "down" threshold,
 then back "up" = one rep).
 
-Start with squat only when testing — get the full pipeline working end to
+Start with squat only when testing - get the full pipeline working end to
 end on one exercise before trusting it on deadlift/push-up.
 """
 
@@ -33,7 +33,7 @@ def calculate_angle(a, b, c):
 
 def extract_landmark_coords(pose_landmarks, landmark_name):
     """Pulls (x, y) for one named landmark out of a MediaPipe pose result.
-    Coordinates are normalized (0-1 relative to frame size) — fine for angle
+    Coordinates are normalized (0-1 relative to frame size) - fine for angle
     calculation since angles are scale-invariant."""
     idx = LANDMARKS[landmark_name]
     lm = pose_landmarks.landmark[idx]

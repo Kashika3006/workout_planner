@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}FitPlan - Forecast{% endblock %}
+{% block content %}
+    <h1>Weight Trend Forecast</h1>
+    <p><a href="{{ url_for('dashboard', user_id=user.user_id) }}">&larr; Back to dashboard</a></p>
+
+    {% if error %}
+        <div class="card">
+            <p>{{ error }}</p>
+            <p>Keep logging daily weigh-ins - once you have at least 14 days of history, a forecast will be available here.</p>
+        </div>
+    {% else %}
+        <div class="card">
+            <p>{{ summary }}</p>
+        </div>
+        <img src="{{ chart_url }}" alt="Weight forecast chart" style="max-width: 100%; border: 1px solid #ddd; border-radius: 6px;">
+        <p><em>Forecasts are estimates based on historical trend only - they don't account for future changes to your plan, injuries, or other factors.</em></p>
+    {% endif %}
+{% endblock %}

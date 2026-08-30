@@ -1,2 +1,5 @@
 venv/
 .env
+uploads_temp/
+static/reports/
+static/forecasts/
