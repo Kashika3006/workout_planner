@@ -48,8 +48,7 @@ def fit_and_forecast(user_id, periods_days=28):
 
 def generate_forecast_chart(model, forecast, save_path=None):
     """Returns a matplotlib figure showing history + forecast + confidence band.
-    If save_path is given, also saves it as a PNG (useful for the PDF report
-    in Phase 6)."""
+    If save_path is given, also saves it as a PNG (useful for the PDF report)."""
     fig = model.plot(forecast)
     ax = fig.gca()
     ax.set_xlabel("Date")

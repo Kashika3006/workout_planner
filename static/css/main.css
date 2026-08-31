@@ -213,7 +213,7 @@ code {
 }
 
 /* ============================================================
-   Mobile responsiveness (from Phase 6)
+   Mobile responsiveness
    ============================================================ */
 @media (max-width: 600px) {
     .navbar {
