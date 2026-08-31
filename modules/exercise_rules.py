@@ -4,8 +4,7 @@ Per-exercise rules: which landmarks to track, what angle range counts as
 peak angle reached in a rep.
 
 Thresholds here are starting points based on common coaching cues, not
-derived from a dataset - document this honestly in your README. Tune them
-by testing against your own recorded reps.
+derived from a dataset.
 
 MediaPipe Pose landmark indices used (left side - assumes the camera
 mostly sees the person's left side; a real production version would

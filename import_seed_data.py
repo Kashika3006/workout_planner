@@ -2,9 +2,6 @@
 One-off script to import the Kaggle "Gym Progress Tracking Dataset (200 Days)"
 CSV into the daily_logs table, under one demo user.
 
-Run this once. If you need to re-run, delete the demo user first (cascades
-and deletes their logs), or handle the duplicate-date errors this script
-already catches.
 """
 
 import sys

@@ -3,3 +3,4 @@ venv/
 uploads_temp/
 static/reports/
 static/forecasts/
+static/uploads/

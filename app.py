@@ -26,6 +26,8 @@ from modules.diet_logic import get_diet_plan
 from modules.workout_logic import get_workout_split
 from modules.database import insert_user, insert_plan, get_user_by_id, get_latest_plan, get_logs_for_user
 from modules.analytics import get_weekly_adherence, get_rolling_weight_trend, get_weekly_activity
+import time
+import shutil
 
 app = Flask(__name__)
 app.secret_key = "dev-only-change-this-before-any-real-deployment"  # fine for local dev, not for production
@@ -58,8 +60,7 @@ def onboarding():
         experience_level = request.form["experience_level"]
         dietary_pref = request.form.get("dietary_pref") or None
 
-        # Run the core planner pipeline - this is the same logic
-        # your master_test.ipynb Part 1 already validated.
+        
         bmr = calculate_bmr(weight_kg, height_cm, age, gender)
         tdee = calculate_tdee(bmr, activity_level)
         diet_plan = get_diet_plan(tdee, goal)
@@ -82,7 +83,7 @@ def onboarding():
         return redirect(url_for("dashboard", user_id=user_id))
 
     except (ValueError, KeyError) as e:
-        # ValueError comes from your modules' validation (bad gender/goal/etc)
+        # ValueError comes from modules' validation (bad gender/goal/etc)
         # KeyError means a form field was missing entirely
         flash(f"Something was invalid in that form: {e}")
         return redirect(url_for("onboarding"))
@@ -149,7 +150,6 @@ def forecast(user_id):
         # Raised when there's under 14 days of weight history
         return render_template("forecast.html", user=user, summary=None, error=str(e))
  
- 
 @app.route("/form-check/<int:user_id>", methods=["GET", "POST"])
 def form_check(user_id):
     user = get_user_by_id(user_id)
@@ -158,7 +158,7 @@ def form_check(user_id):
         return redirect(url_for("home"))
  
     if request.method == "GET":
-        return render_template("form_check.html", user=user, results=None)
+        return render_template("form_check.html", user=user, results=None, video_url=None)
  
     # POST - video uploaded
     video_file = request.files.get("video")
@@ -169,13 +169,12 @@ def form_check(user_id):
         return redirect(url_for("form_check", user_id=user_id))
  
     filename = secure_filename(video_file.filename)
-    video_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-    video_file.save(video_path)
+    temp_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    video_file.save(temp_path)
  
     try:
-        results = process_video(video_path, exercise_type=exercise_type, frame_skip=2)
+        results = process_video(temp_path, exercise_type=exercise_type, frame_skip=2)
  
-        # Save each rep's result to the database
         for rep in results:
             insert_form_check(
                 user_id=user_id,
@@ -186,13 +185,32 @@ def form_check(user_id):
                 feedback=rep["feedback"]
             )
  
-        return render_template("form_check.html", user=user, results=results, exercise_type=exercise_type)
+        # Success - move (not delete) the video into a static, servable
+        # location so it can be shown alongside the results. Prefixed with
+        # a timestamp so repeated uploads for the same user don't collide.
+        persist_dir = os.path.join("static", "uploads", str(user_id))
+        os.makedirs(persist_dir, exist_ok=True)
+        unique_name = f"{int(time.time())}_{filename}"
+        persist_path = os.path.join(persist_dir, unique_name)
+        shutil.move(temp_path, persist_path)
  
-    finally:
-        # Clean up the uploaded video file regardless of success/failure -
-        # don't let temp video files pile up on disk
-        if os.path.exists(video_path):
-            os.remove(video_path)
+        video_url = url_for("static", filename=f"uploads/{user_id}/{unique_name}")
+ 
+        return render_template(
+            "form_check.html",
+            user=user,
+            results=results,
+            exercise_type=exercise_type,
+            video_url=video_url
+        )
+ 
+    except Exception:
+        # Processing failed for some reason (bad video, unsupported codec,
+        # etc.) - clean up the temp file since we never got to the persist
+        # step, and let the error surface normally.
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        raise
  
  
 @app.route("/report/<int:user_id>")
