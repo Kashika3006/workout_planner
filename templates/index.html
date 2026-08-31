@@ -1,18 +1,83 @@
 {% extends "base.html" %}
-{% block title %}FitPlan - Home{% endblock %}
+{% block title %}FitPlan AI - Home{% endblock %}
 {% block content %}
-    <h1>Personalized Workout &amp; Diet Planner</h1>
-    <p>Get a plan built around your goals, activity level, and stats.</p>
-    <a href="{{ url_for('onboarding') }}" class="button">Create a New Plan</a>
 
-    <hr>
+    <section class="hero">
+        <h1 class="hero-title">Personalized Workout<br>&amp; Diet Planning, Powered by Data</h1>
+        <p class="hero-subtitle">
+            Plans built from your actual stats - not generic templates. Tracked, forecasted, and form-checked.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('onboarding') }}" class="button button-lg">Create My Plan</a>
+            <a href="#find-dashboard" class="button button-lg button-outline">Find My Dashboard</a>
+        </div>
+    </section>
 
-    <h2>Already have a plan?</h2>
-    <div class="card">
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="5"/>
+                    <circle cx="12" cy="12" r="1"/>
+                </svg>
+            </div>
+            <h3>Personalized Plans</h3>
+            <p>Calorie and macro targets computed from your BMR/TDEE, plus a weekly workout split matched to your goal and training experience.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 19V10M12 19V5M20 19V13"/>
+                </svg>
+            </div>
+            <h3>SQL-Powered Analytics</h3>
+            <p>Weekly adherence rate and 7-day rolling weight trend, computed directly from your logged history using MySQL window functions.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 17l5-6 4 4 8-10"/>
+                    <path d="M14 5h6v6" fill="none"/>
+                </svg>
+            </div>
+            <h3>Weight Forecasting</h3>
+            <p>A Prophet time-series model projects your weight trend 28 days out, with a confidence interval - not just a single guess.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="12" cy="8" r="3"/>
+                    <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+                </svg>
+            </div>
+            <h3>AI Form Checker</h3>
+            <p>Upload a squat, deadlift, or push-up video - pose estimation counts your reps and flags depth issues, rep by rep.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M6 2h9l5 5v15H6z"/>
+                    <path d="M15 2v5h5"/>
+                    <path d="M9 13h6M9 17h6"/>
+                </svg>
+            </div>
+            <h3>Downloadable Report</h3>
+            <p>A full PDF summary of your plan, adherence, and forecast - ready to save or share.</p>
+        </div>
+    </section>
+
+    <section id="find-dashboard" class="card find-dashboard-card">
+        <h2>Already Have a Plan?</h2>
         <form action="{{ url_for('find_dashboard') }}" method="post">
             <label for="name">Your Name</label>
             <input type="text" id="name" name="name" placeholder="Enter the name you signed up with" required>
             <button type="submit">Find My Dashboard</button>
         </form>
-    </div>
+    </section>
+
 {% endblock %}

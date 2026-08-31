@@ -254,3 +254,135 @@ code {
         font-size: 1.5rem;
     }
 }
+
+
+.hero {
+    text-align: center;
+    padding: 3.5rem 1rem 3rem;
+}
+ 
+.hero-title {
+    font-family: 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    line-height: 1.25;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--flame) 50%, var(--ember) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 1rem;
+    display: block;
+}
+ 
+.hero-subtitle {
+    color: var(--ash-dim);
+    font-size: 1.1rem;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+}
+ 
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+ 
+.button-lg {
+    font-size: 1rem;
+    padding: 0.9rem 1.8rem;
+}
+ 
+.button-outline {
+    background: transparent;
+    border: 2px solid var(--flame);
+    color: var(--flame);
+}
+ 
+.button-outline:hover {
+    background: rgba(255, 107, 26, 0.1);
+    filter: none;
+}
+ 
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+}
+ 
+.feature-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--flame);
+    border-radius: 8px;
+    padding: 1.5rem 1.25rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+ 
+.feature-card:hover {
+    transform: translateY(-3px);
+    border-top-color: var(--gold);
+}
+ 
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--flame);
+    margin-bottom: 0.9rem;
+}
+ 
+.feature-icon svg {
+    width: 100%;
+    height: 100%;
+}
+ 
+.feature-card h3 {
+    font-size: 1.05rem;
+    text-transform: none;
+    letter-spacing: normal;
+    background: none;
+    -webkit-text-fill-color: var(--ash);
+    color: var(--ash);
+    margin: 0 0 0.5rem;
+    display: block;
+}
+ 
+.feature-card p {
+    color: var(--ash-dim);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+ 
+.find-dashboard-card {
+    max-width: 480px;
+    margin: 2.5rem auto;
+    text-align: left;
+}
+ 
+.find-dashboard-card h2 {
+    font-size: 1.3rem;
+}
+ 
+/* Mobile adjustments for the hero/features */
+@media (max-width: 600px) {
+    .hero-title {
+        font-size: 1.7rem;
+    }
+ 
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+ 
+    .features {
+        grid-template-columns: 1fr;
+    }
+}
+ 
+
+
+
+
