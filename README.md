@@ -4,6 +4,8 @@ A Flask web application that generates personalized diet and workout plans, trac
 
 Built as a final project for the Edunet Foundation / IBM SkillsBuild internship.
 
+Demo Video: https://github.com/user-attachments/assets/9c8e91e0-6749-4515-9f33-274f89bd2c47
+
 ---
 
 ## Problem Statement
