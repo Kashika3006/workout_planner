@@ -81,7 +81,7 @@ Five tables, linked by foreign keys with cascading deletes:
 ### Setup
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Kashika3006/workout_planner
 cd workout_planner
 
 py -3.11 -m venv venv
