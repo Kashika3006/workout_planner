@@ -5,6 +5,7 @@ A Flask web application that generates personalized diet and workout plans, trac
 Built as a final project for the Edunet Foundation / IBM SkillsBuild internship.
 
 Demo Video: https://github.com/user-attachments/assets/9c8e91e0-6749-4515-9f33-274f89bd2c47
+Form Checker demo: https://github.com/user-attachments/assets/6e9f1705-241a-4c3f-81db-cda50a1ff785  |  https://github.com/user-attachments/assets/b75cbddd-4470-4ad5-ad91-ef0dc1b672fa
 
 ---
 
